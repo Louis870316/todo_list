@@ -31,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
   Todo.find()
     .lean()
+    .sort({ _id: 'asc' })
     .then(todos => res.render('index', { todos }))
     .catch(error => console.error(error))
 })
@@ -70,10 +71,10 @@ app.get('/todos/:id/edit', (req, res) => {
 app.post('/todos/:id/edit', (req, res) => {
   const id = req.params.id
   const { name, isDone } = req.body
-  return Todo.findById(id) 
+  return Todo.findById(id)
     .then(todo => {
       todo.name = name
-     todo.isDone = isDone === 'on'
+      todo.isDone = isDone === 'on'
       return todo.save()
     })
     .then(() => res.redirect(`/todos/${id}`))
