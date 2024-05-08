@@ -35,10 +35,12 @@ app.get('/', (req, res) => {
     .catch(error => console.error(error))
 })
 
+//瀏覽全部
 app.get('/todos/new', (req, res) => {
   return res.render('new')
 })
 
+//新增
 app.post('/todos', (req, res) => {
   const name = req.body.name
   return Todo.create({ name })
@@ -46,6 +48,7 @@ app.post('/todos', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//瀏覽指定
 app.get('/todos/:id', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
@@ -54,6 +57,7 @@ app.get('/todos/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//編輯
 app.get('/todos/:id/edit', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
@@ -62,18 +66,21 @@ app.get('/todos/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//修改
 app.post('/todos/:id/edit', (req, res) => {
   const id = req.params.id
-  const name = req.body.name
-  return Todo.findById(id)
+  const { name, isDone } = req.body
+  return Todo.findById(id) 
     .then(todo => {
       todo.name = name
+     todo.isDone = isDone === 'on'
       return todo.save()
     })
     .then(() => res.redirect(`/todos/${id}`))
     .catch(error => console.log(error))
 })
 
+//刪除
 app.post('/todos/:id/delete', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
