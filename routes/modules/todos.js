@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Todo = require('../../models/todo')
 
-//瀏覽全部
+//新增頁面
 router.get('/new', (req, res) => {
   return res.render('new')
 })
@@ -55,6 +55,5 @@ router.delete('/:id', (req, res) => {
     .then(() => res.redirect(`/`))
     .catch(error => console.log(error))
 })
-
 
 module.exports = router
