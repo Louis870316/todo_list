@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb+srv://lsd:lsd870316@cluster0.9slox1g.mongodb.net/todo-list?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true }) //設定連線到 mongoDB
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) //設定連線到 mongoDB
 
 const db = mongoose.connection
 db.on('error', () => {
