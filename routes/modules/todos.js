@@ -9,8 +9,8 @@ router.get('/new', (req, res) => {
 
 //新增
 router.post('/', (req, res) => {
-  const name = req.body.name
-  return Todo.create({ name })
+  const todos = String(req.body.name).split(',').map(todo => ({ name: todo }))
+  Todo.insertMany(todos)
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
