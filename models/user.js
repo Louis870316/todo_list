@@ -16,8 +16,8 @@ const userSchema = new Schema({
   },
   createAt: {
     type: Date,
-    default: Data.now
+    default: Date.now
   }
 })
 
-module.exports = mongoose.model('User', todoSchema)
+module.exports = mongoose.model('User', userSchema)
