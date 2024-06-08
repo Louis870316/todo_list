@@ -23,7 +23,7 @@ router.post('/register', (req, res) => {
         res.render('register', { name, email, password, confirmPassword })
       } else {
         User.create({ name, email, password, confirmPassword })
-          .then(() => res.redirect('/'))
+          .then(() => res.redirect('login'))
           .catch(error => console.log(error))
       }
     })
