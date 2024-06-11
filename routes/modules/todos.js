@@ -9,16 +9,20 @@ router.get('/new', (req, res) => {
 
 //新增
 router.post('/', (req, res) => {
-  const todos = String(req.body.name).split(',').map(todo => ({ name: todo }))
-  Todo.insertMany(todos)
+  const userId = req.user._id
+  const name = req.body.name
+  return Todo.create({ name, userId })
+    /* const todos = String(req.body.name).split(',').map(todo => ({ name: todo }))
+    Todo.insertMany(todos, ) */ //新增多筆資料
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
 //瀏覽指定
 router.get('/:id', (req, res) => {
-  const id = req.params.id
-  return Todo.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Todo.findOne({ _id, userId })
     .lean()
     .then((todo) => res.render('detail', { todo }))
     .catch(error => console.log(error))
@@ -26,8 +30,9 @@ router.get('/:id', (req, res) => {
 
 //編輯
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  return Todo.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Todo.findOne({ _id, userId })
     .lean()
     .then((todo) => res.render('edit', { todo }))
     .catch(error => console.log(error))
@@ -35,22 +40,24 @@ router.get('/:id/edit', (req, res) => {
 
 //修改
 router.put('/:id', (req, res) => {
-  const id = req.params.id
+  const userId = req.user._id
+  const _id = req.params.id
   const { name, isDone } = req.body
-  return Todo.findById(id)
+  return Todo.findOne({ _id, userId })
     .then(todo => {
       todo.name = name
       todo.isDone = isDone === 'on'
       return todo.save()
     })
-    .then(() => res.redirect(`/todos/${id}`))
+    .then(() => res.redirect(`/todos/${_id}`))
     .catch(error => console.log(error))
 })
 
 //刪除
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  return Todo.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Todo.findOne({ _id, userId })
     .then(todo => todo.remove())
     .then(() => res.redirect(`/`))
     .catch(error => console.log(error))

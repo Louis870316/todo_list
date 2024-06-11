@@ -8,6 +8,12 @@ const todoSchema = new Schema({
   isDone: {
     type: Boolean,
     default: false
+  },
+  userId: {
+    type: Schema.Types.Object,
+    ref: 'User',
+    index: true,
+    required: true
   }
 })
 module.exports = mongoose.model('Todo', todoSchema)
