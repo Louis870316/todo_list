@@ -2,10 +2,12 @@ Todo-List
 ![index text](https://drive.usercontent.google.com/download?id=1LmGldPSSoWcxmAWWwd27LeFhtqAYUxsd&export=view)
 ## 介紹
 
-紀錄屬於自己的todo-list，可以瀏覽、新增創建、修改、刪除。
+紀錄屬於自己的todo-list，有會員註冊系統，登入後可以瀏覽、新增創建、修改、刪除。
 
 ### 功能
 
+- 登入
+- 註冊
 - 瀏覽todo資訊
 - 新增todo
 - 編輯todo
